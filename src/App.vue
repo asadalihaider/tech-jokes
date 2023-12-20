@@ -6,7 +6,7 @@
       >
         <div class="flex flex-col justify-around h-full w-full p-3 md:p-6 overflow-y-auto">
           <!-- header -->
-          <h1 class="text-center">Header</h1>
+          <Header />
 
           <!-- Content area -->
           <div class="flex justify-center items-center h-full">
@@ -24,10 +24,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-};
+<script setup>
+import Header from './components/HeaderComponent.vue';
 </script>
 
 <style scoped>

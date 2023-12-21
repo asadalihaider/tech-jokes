@@ -67,7 +67,12 @@
 <script setup>
 import { defineProps, defineEmits, ref } from 'vue';
 
-const props = defineProps(['darkMode']);
+const props = defineProps({
+  darkMode: {
+    type: Boolean,
+    default: false,
+  },
+});
 const emits = defineEmits(['changeLanguage', 'toggleTheme']);
 
 const isOptionsExpanded = ref(false);

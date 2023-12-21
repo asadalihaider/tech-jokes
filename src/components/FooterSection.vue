@@ -3,7 +3,10 @@
     class="p-5 px-6 flex items-center justify-between bg-gray-900 shadow-2xl text-gray-400 rounded-2xl cursor-pointer"
   >
     <!-- copy to clipboard -->
-    <div class="flex flex-col items-center transition ease-in duration-200 hover:text-indigo-500">
+    <div
+      class="flex flex-col items-center transition ease-in duration-200 hover:text-indigo-500"
+      @click="copyToClipboard"
+    >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
         <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
@@ -20,7 +23,7 @@
       >
     </div>
     <!-- next joke -->
-    <div class="flex flex-col items-center hover:text-indigo-500">
+    <div class="flex flex-col items-center hover:text-indigo-500" @click="getNewJoke">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
         <path
           fill-rule="evenodd"
@@ -40,3 +43,17 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { defineEmits } from 'vue';
+
+const emits = defineEmits(['getNewJoke', 'copyToClipboard']);
+
+const getNewJoke = () => {
+  emits('getNewJoke');
+};
+
+const copyToClipboard = () => {
+  emits('copyToClipboard');
+};
+</script>

@@ -18,7 +18,7 @@
           </div>
 
           <!-- Footer -->
-          <div class="text-center">Footer area</div>
+          <Footer />
         </div>
       </div>
     </div>
@@ -27,8 +27,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import Header from './components/HeaderComponent.vue';
+import Header from './components/HeaderSection.vue';
 import JokeCard from './components/JokeCard.vue';
+import Footer from './components/FooterSection.vue';
 
 const darkMode = ref(false);
 const language = ref('en');

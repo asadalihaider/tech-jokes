@@ -72,7 +72,7 @@ const toggleTheme = () => {
 
 const fetchAJoke = async () => {
   loading.value = true;
-  const res = await fetch(process.env.VUE_APP_JOKE_API_URL + language.value);
+  const res = await fetch('/api' + language.value);
   const joke = await res.json();
   return joke;
 };

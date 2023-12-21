@@ -2,9 +2,9 @@
   <div :class="{ dark: darkMode }">
     <div class="min-w-screen min-h-screen bg-gray-200 flex items-center justify-center md:p-5">
       <div
-        class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-400 md:rounded-xl shadow-lg overflow-hidden relative flex w-full sm:w-[414px] h-screen sm:h-[736px]"
+        class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-400 sm:rounded-xl shadow-lg overflow-hidden relative flex w-full sm:w-[414px] h-screen sm:h-[736px]"
       >
-        <div class="flex flex-col justify-around h-full w-full p-3 md:p-6 overflow-y-auto">
+        <div class="flex flex-col justify-around h-full w-full p-4 overflow-y-auto">
           <!-- header -->
           <Header :darkMode="darkMode" @changeLanguage="changeLanguage" @toggleTheme="toggleTheme" />
 
@@ -20,7 +20,7 @@
           <!-- Error msg on fetching jokes -->
           <div
             v-if="showError"
-            class="absolute bottom-24 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-2xl bg-red-500 text-center text-white transform"
+            class="absolute bottom-20 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-2xl bg-red-500 text-center text-white text-xs transform"
           >
             {{ errorMsg }}
           </div>
@@ -69,29 +69,45 @@ const toggleTheme = () => {
   darkMode.value = !darkMode.value;
 };
 
-const fetchAJoke = async () => {
+const fetchJoke = async () => {
   loading.value = true;
-  const res = await fetch('/api?lang=' + language.value);
-  const joke = await res.json();
-  return joke;
+  try {
+    const res = await fetch('/api?lang=' + language.value);
+    if (res.ok) {
+      const cache = await caches.open('api-cache');
+      await cache.put('/api?lang=' + language.value, res.clone());
+    }
+    const joke = await res.json();
+    return joke;
+  } catch (error) {
+    const cache = await caches.open('api-cache');
+    const cachedResponse = await cache.match('/api?lang=' + language.value);
+    if (cachedResponse) {
+      const joke = await cachedResponse.json();
+      return joke;
+    } else {
+      return { error: true, message: 'No cached data available.' };
+    }
+  } finally {
+    loading.value = false;
+  }
 };
 
 const getNewJoke = async () => {
-  if (navigator.onLine) {
-    const response = await fetchAJoke();
-    if (!response.error) {
-      joke.value = response.type === 'single' ? response.joke : `${response.setup}\n\n\n${response.delivery}`;
-    } else if (response.code === 106) {
-      joke.value = 'Sorry, Jokes are not currently available in the selected language.';
-    } else {
-      joke.value = 'Sorry, something is not working fine.';
-    }
-    loading.value = false;
-  } else {
-    errorMsg.value = 'Check your internet connection!';
+  if (!navigator.onLine) {
+    errorMsg.value = 'You are offline!';
     showError.value = true;
     setTimeout(() => (showError.value = false), 1000);
   }
+  const response = await fetchJoke();
+  if (!response.error) {
+    joke.value = response.type === 'single' ? response.joke : `${response.setup}\n\n\n${response.delivery}`;
+  } else if (response.code === 106) {
+    joke.value = 'Sorry, Jokes are not currently available in the selected language.';
+  } else {
+    joke.value = response.message || '...';
+  }
+  loading.value = false;
 };
 
 const copyToClipboard = async () => {

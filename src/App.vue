@@ -64,14 +64,35 @@ const msg = ref('');
 
 const changeLanguage = (selectedLanguage) => {
   language.value = selectedLanguage;
+  getNewJoke();
 };
 const toggleTheme = () => {
   darkMode.value = !darkMode.value;
 };
-const getNewJoke = async () => {
+
+const fetchAJoke = async () => {
   loading.value = true;
-  setTimeout(() => (loading.value = false), 1000);
-  joke.value = 'Hello world';
+  const res = await fetch(process.env.VUE_APP_JOKE_API_URL + language.value);
+  const joke = await res.json();
+  return joke;
+};
+
+const getNewJoke = async () => {
+  if (navigator.onLine) {
+    const response = await fetchAJoke();
+    if (!response.error) {
+      joke.value = response.type === 'single' ? response.joke : `${response.setup}\n\n\n${response.delivery}`;
+    } else if (response.code === 106) {
+      joke.value = 'Sorry, Jokes are not currently available in the selected language.';
+    } else {
+      joke.value = 'Sorry, something is not working fine.';
+    }
+    loading.value = false;
+  } else {
+    errorMsg.value = 'Check your internet connection!';
+    showError.value = true;
+    setTimeout(() => (showError.value = false), 1000);
+  }
 };
 
 const copyToClipboard = async () => {

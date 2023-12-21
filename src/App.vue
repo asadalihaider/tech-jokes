@@ -10,10 +10,11 @@
 
           <!-- Content area -->
           <div class="flex justify-center items-center h-full">
+            <!-- If no joke is loaded yet, show a preloader -->
+            <img v-if="loading" class="w-10" src="./assets/loading.gif" alt="Loading" />
+
             <!-- Joke Card Contining a sigle joke -->
-            <div>
-              <h3>content section</h3>
-            </div>
+            <JokeCard v-else :joke="joke" />
           </div>
 
           <!-- Footer -->
@@ -25,11 +26,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Header from './components/HeaderComponent.vue';
+import JokeCard from './components/JokeCard.vue';
 
 const darkMode = ref(false);
 const language = ref('en');
+const loading = ref(false);
+const joke = ref('');
 
 const changeLanguage = (selectedLanguage) => {
   language.value = selectedLanguage;
@@ -37,6 +41,15 @@ const changeLanguage = (selectedLanguage) => {
 const toggleTheme = () => {
   darkMode.value = !darkMode.value;
 };
+const getNewJoke = async () => {
+  loading.value = true;
+  setTimeout(() => (loading.value = false), 1000);
+  joke.value = 'Hello world';
+};
+
+onMounted(() => {
+  getNewJoke();
+});
 </script>
 
 <style scoped>

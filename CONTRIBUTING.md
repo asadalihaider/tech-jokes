@@ -9,7 +9,7 @@ Thank you for considering contributing to Tech Jokes! This document outlines the
 2. Clone the forked repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/tech-jokes-pwa.git
+git clone https://github.com/asadalihaider/tech-jokes.git
 ```
 
 3. Create a new branch for your contribution:

@@ -11,7 +11,12 @@
           <!-- Content area -->
           <div class="flex justify-center items-center h-full">
             <!-- If no joke is loaded yet, show a preloader -->
-            <img v-if="loading" class="w-10" src="./assets/loading.gif" alt="Loading" />
+            <div v-if="loading" class="relative flex items-center justify-center">
+              <div class="w-10 h-10 rounded-full absolute border-[6px] border-dashed border-gray-200"></div>
+              <div
+                class="w-10 h-10 rounded-full animate-spin absolute border-[6px] border-dashed border-indigo-500 border-t-transparent"
+              ></div>
+            </div>
 
             <!-- Joke Card Contining a sigle joke -->
             <JokeCard v-else :joke="joke" />

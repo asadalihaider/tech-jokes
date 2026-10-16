@@ -41,7 +41,7 @@
     <!-- toggle dark mode -->
     <div class="flex items-center pl-3" href="#">
       <button
-        class="rounded-md focus:outline-none hover:text-indigo-500"
+        class="rounded-md focus:outline-hidden hover:text-indigo-500"
         @click="toggleTheme"
         aria-label="Toggle color mode"
       >
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   darkMode: {

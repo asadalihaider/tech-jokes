@@ -84,7 +84,7 @@ const fetchJoke = async () => {
     }
     const joke = await res.json();
     return joke;
-  } catch (error) {
+  } catch {
     const cache = await caches.open('api-cache');
     const cachedResponse = await cache.match('/api?lang=' + language.value);
     if (cachedResponse) {
@@ -121,7 +121,7 @@ const copyToClipboard = async () => {
     msg.value = 'Copied!';
     showMsg.value = true;
     setTimeout(() => (showMsg.value = false), 800);
-  } catch ($e) {
+  } catch {
     errorMsg.value = "Your device doesn't support!";
     showError.value = true;
     setTimeout(() => (showError.value = false), 1000);

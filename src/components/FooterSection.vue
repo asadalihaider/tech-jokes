@@ -45,8 +45,6 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
-
 const emits = defineEmits(['getNewJoke', 'copyToClipboard']);
 
 const getNewJoke = () => {

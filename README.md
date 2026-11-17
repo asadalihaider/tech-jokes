@@ -2,7 +2,7 @@
 
 ## Overview
 
-Tech Jokes is a Progressive Web App built using Vue CLI and Vue 3 Composition API. This app provides a fun way to explore tech-related jokes. Users can seamlessly switch between different languages and choose their preferred theme (dark or light). The app leverages the power of Vue 3's Composition API for efficient and organized code.
+Tech Jokes is a Progressive Web App built with Vue 3 (Composition API) and Vite. This app provides a fun way to explore tech-related jokes. Users can seamlessly switch between different languages and choose their preferred theme (dark or light). The app leverages the power of Vue 3's Composition API for efficient and organized code.
 
 ## Features
 
@@ -13,12 +13,11 @@ Tech Jokes is a Progressive Web App built using Vue CLI and Vue 3 Composition AP
 ## Technologies Used
 
 - Vue.js 3
-- Vue CLI
-- Vue Router (for future enhancements)
+- Vite (with vite-plugin-pwa)
 - Composition API
-- Service Worker for PWA capabilities
+- Service worker via Workbox for offline support
 - Tailwind CSS for styling
-- Check API Docs [here](jokeapi.dev)
+- [JokeAPI](https://jokeapi.dev) for the jokes
 
 ## Getting Started
 
@@ -33,7 +32,7 @@ git clone https://github.com/asadalihaider/tech-jokes.git
 **2. Navigate to Project Directory:**
 
 ```bash
-cd tech-jokes-pwa
+cd tech-jokes
 ```
 
 **3. Install Dependencies:**
